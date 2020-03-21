@@ -19,6 +19,7 @@ public class PersonService {
 
         DatabasePersonExtractor personExtractor = new DatabasePersonExtractor();
         logger.debug("Create DatabaseExtractor for Persons");
+
         List<Person> adultPersons = personExtractor
                 .getPersonsByQuery("SELECT * FROM person WHERE sex = 'male' AND age > 18");
         logger.debug("Extracted " + adultPersons.size() + " adult males");
