@@ -26,11 +26,14 @@ public class PersonService {
     private double getTotalImt(List<Person> adultPersons) {
         double totalImt = 0.0;
         for (Person p : adultPersons) {
-            double heightInMeters = p.getHeight() / 100d;
-            double imt = p.getWeight() / (Double) (heightInMeters * heightInMeters);
-            totalImt += imt;
+            totalImt += getImt(p);
         }
         return totalImt;
+    }
+
+    private double getImt(Person p) {
+        double heightInMeters = p.getHeight() / 100d;
+        return p.getWeight() / (Double) (heightInMeters * heightInMeters);
     }
 
 }
