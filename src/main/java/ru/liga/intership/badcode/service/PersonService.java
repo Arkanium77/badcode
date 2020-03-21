@@ -17,11 +17,13 @@ public class PersonService {
         double totalBMI;
         long countOfPerson;
 
-        DatabasePersonExtractor personExtractor = new DatabasePersonExtractor();
+        PersonDatabaseExtractor personExtractor = new PersonDatabaseExtractor();
         logger.debug("Create DatabaseExtractor for Persons");
+        String query = new PersonSQLSelectBuilder("person").setSelectAll()
+                .where("sex = 'male'").andWhere("age > 18").build();
 
-        List<Person> adultPersons = personExtractor
-                .getPersonsByQuery("SELECT * FROM person WHERE sex = 'male' AND age > 18");
+        List<Person> adultPersons = ToPersonConverter.objectListConverter(personExtractor
+                .extractByQuery(query));//"SELECT * FROM person WHERE sex = 'male' AND age > 18"
         logger.debug("Extracted " + adultPersons.size() + " adult males");
 
         totalBMI = getTotalBMI(adultPersons);
@@ -45,6 +47,7 @@ public class PersonService {
         double heightInMeters = person.getHeight() / 100d;
         return person.getWeight() / (Double) (heightInMeters * heightInMeters);
     }
+
 
 }
 
