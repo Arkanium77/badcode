@@ -1,39 +1,48 @@
 package ru.liga.intership.badcode.service;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.liga.intership.badcode.domain.Person;
 
 import java.util.List;
 
 public class PersonService {
-
+    Logger logger = LoggerFactory.getLogger(PersonService.class);
 
     /**
      * Выводит средний индекс массы тела всех лиц мужского пола старше 18 лет
      */
     public void getAdultMaleUsersAverageBMI() {
-        double totalImt = 0.0;
-        long countOfPerson = 0;
+        double totalBMI;
+        long countOfPerson;
 
-        PersonDbWorker works = new PersonDbWorker();
-        List<Person> adultPersons = works.getPersonsByQuery("SELECT * FROM person WHERE sex = 'male' AND age > 18");
-        totalImt = getTotalImt(adultPersons);
+        DatabasePersonExtractor personExtractor = new DatabasePersonExtractor();
+        logger.debug("Create DatabaseExtractor for Persons");
+        List<Person> adultPersons = personExtractor
+                .getPersonsByQuery("SELECT * FROM person WHERE sex = 'male' AND age > 18");
+        logger.debug("Extracted " + adultPersons.size() + " adult males");
+
+        totalBMI = getTotalBMI(adultPersons);
+        logger.debug("Total BMI : {}", totalBMI);
+
         countOfPerson = adultPersons.size();
-
-        System.out.println("Average imt - " + totalImt / countOfPerson);
+        logger.info("Average BMI - {}", totalBMI / countOfPerson);
     }
 
-    private double getTotalImt(List<Person> adultPersons) {
-        double totalImt = 0.0;
-        for (Person p : adultPersons) {
-            totalImt += getImt(p);
+    private double getTotalBMI(List<Person> people) {
+        double totalBMI = 0.0;
+        for (Person person : people) {
+            double bmi = getBMI(person);
+            logger.trace("Imt of {} is {}", person, bmi);
+            totalBMI += bmi;
         }
-        return totalImt;
+        return totalBMI;
     }
 
-    private double getImt(Person p) {
-        double heightInMeters = p.getHeight() / 100d;
-        return p.getWeight() / (Double) (heightInMeters * heightInMeters);
+    private double getBMI(Person person) {
+        double heightInMeters = person.getHeight() / 100d;
+        return person.getWeight() / (Double) (heightInMeters * heightInMeters);
     }
 
 }
