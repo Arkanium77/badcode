@@ -1,7 +1,6 @@
 package ru.liga.intership.badcode.domain;
 
 
-
 public class Person {
     private Long id;
     private String sex;
