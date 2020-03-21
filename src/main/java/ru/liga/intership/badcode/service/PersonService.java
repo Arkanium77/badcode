@@ -23,7 +23,7 @@ public class PersonService {
                 .where("sex = 'male'").andWhere("age > 18").build();
 
         List<Person> adultPersons = ToPersonConverter.objectListConverter(personExtractor
-                .extractByQuery(query));//"SELECT * FROM person WHERE sex = 'male' AND age > 18"
+                .extractByQuery(query));
         logger.debug("Extracted " + adultPersons.size() + " adult males");
 
         totalBMI = getTotalBMI(adultPersons);
