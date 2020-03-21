@@ -1,4 +1,4 @@
-package ru.liga.intership.badcode.service;
+package ru.liga.intership.badcode.service.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
