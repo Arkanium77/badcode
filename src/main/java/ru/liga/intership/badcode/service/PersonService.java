@@ -3,8 +3,6 @@ package ru.liga.intership.badcode.service;
 
 import ru.liga.intership.badcode.domain.Person;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PersonService {
@@ -16,14 +14,12 @@ public class PersonService {
     public void getAdultMaleUsersAverageBMI() {
         double totalImt = 0.0;
         long countOfPerson = 0;
-        try {
-            List<Person> adultPersons = getAdultPersonsFromDb();
-            totalImt = getTotalImt(adultPersons);
-            countOfPerson = adultPersons.size();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        PersonDbWorker works = new PersonDbWorker();
+        List<Person> adultPersons = works.getPersonsByQuery("SELECT * FROM person WHERE sex = 'male' AND age > 18");
+        totalImt = getTotalImt(adultPersons);
+        countOfPerson = adultPersons.size();
+
         System.out.println("Average imt - " + totalImt / countOfPerson);
     }
 
@@ -37,27 +33,5 @@ public class PersonService {
         return totalImt;
     }
 
-    private List<Person> getAdultPersonsFromDb() throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:hsqldb:mem:test", "sa", "");
-        Statement statement = conn.createStatement();
-        ResultSet rs = statement.executeQuery("SELECT * FROM person WHERE sex = 'male' AND age > 18");
-        return personsByResultSet(rs);
-    }
-
-    private List<Person> personsByResultSet(ResultSet rs) throws SQLException {
-        List<Person> adultPersons = new ArrayList<>();
-        while (rs.next()) {
-            Person p = new Person();
-            //Retrieve by column name
-            p.setId(rs.getLong("id"));
-            p.setSex(rs.getString("sex"));
-            p.setName(rs.getString("name"));
-            p.setAge(rs.getLong("age"));
-            p.setWeight(rs.getLong("weight"));
-            p.setHeight(rs.getLong("height"));
-            adultPersons.add(p);
-        }
-        return adultPersons;
-    }
-
 }
+
