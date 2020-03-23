@@ -8,9 +8,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Класс предназначен для конвертации объектов класса Object в объекты класса Person.
+ */
 public class ToPersonConverter {
     private static Logger logger = LoggerFactory.getLogger(ToPersonConverter.class);
 
+    /**
+     * <b>Преобразовать список объектов</b>
+     *
+     * @param objectList список объектов класса Object
+     * @return список всех объектов, которые удалось преобразовать в Person
+     */
     public static List<Person> objectListConverter(List<Object> objectList) {
         return objectList.stream()
                 .map(ToPersonConverter::objectConverter)
@@ -18,6 +27,12 @@ public class ToPersonConverter {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * <b>Преобразовать Object в Person</b>
+     *
+     * @param o объект класса Object
+     * @return преобразованный в Person объект или null, в случае невозможности преобразования.
+     */
     public static Person objectConverter(Object o) {
         try {
             return (Person) o;

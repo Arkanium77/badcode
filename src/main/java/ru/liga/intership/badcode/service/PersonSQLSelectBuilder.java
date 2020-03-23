@@ -5,23 +5,28 @@ import ru.liga.intership.badcode.interfaces.SQLSelectBuilder;
 import java.util.List;
 
 public class PersonSQLSelectBuilder extends SQLSelectBuilder {
-//    private Long id;
-//    private String sex;
-//    private String name;
-//    private Long age;
-//    private Long weight;
-//    private Long height;
 
     public PersonSQLSelectBuilder(String tableName) {
         super(tableName);
     }
 
+    /**
+     * Построение условия по списку
+     *
+     * @param base список условий
+     * @return строка, содержащая все условия списка через ", "
+     */
     private static String getConditionsByBase(List<String> base) {
         StringBuilder condition = new StringBuilder();
         base.forEach(s -> condition.append(s).append(", "));
         return condition.substring(0, condition.length() - 2);
     }
 
+    /**
+     * <b>Метод, собирающий итоговый запрос</b>
+     *
+     * @return строку, содержащую sql запрос, собранный по заданным данным.
+     */
     @Override
     public String build() {
         StringBuilder query = new StringBuilder("SELECT ");
@@ -44,6 +49,7 @@ public class PersonSQLSelectBuilder extends SQLSelectBuilder {
         }
         return getConditionsByBase(select);
     }
+
 
     public PersonSQLSelectBuilder selectId() {
         select.add("id");

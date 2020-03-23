@@ -16,18 +16,28 @@ public class PersonDatabaseExtractor implements DatabaseExtractor {
     private String user;
     private String password;
 
-    public PersonDatabaseExtractor() {
-        conString = "jdbc:hsqldb:mem:test";
-        user = "sa";
-        password = "";
+    private PersonDatabaseExtractor() {
     }
 
+    /**
+     * Конструктор
+     *
+     * @param conString строка для подключения к бд.
+     * @param user      имя пользователя бд.
+     * @param password  пароль пользователя бд.
+     */
     public PersonDatabaseExtractor(String conString, String user, String password) {
         this.conString = conString;
         this.user = user;
         this.password = password;
     }
 
+    /**
+     * Извлечь запими из БД по запросу.
+     *
+     * @param sqlQuery строка содержащая sql запрос
+     * @return Список содержащий все объекты класса Person, что удалось извлечь по запросу.
+     */
     public List<Object> extractByQuery(String sqlQuery) {
         List<Object> people = new ArrayList<>();
         Connection conn = getConnection();
@@ -71,7 +81,6 @@ public class PersonDatabaseExtractor implements DatabaseExtractor {
     private List<Object> parseResultSet(ResultSet rs) {
         List<Object> people = new ArrayList<>();
         if (rs == null) return people;
-
         try {
             while (rs.next()) {
                 Person p = new Person();
