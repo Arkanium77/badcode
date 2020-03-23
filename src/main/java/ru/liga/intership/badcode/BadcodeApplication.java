@@ -8,13 +8,13 @@ import ru.liga.intership.badcode.service.PersonService;
 
 @SpringBootApplication
 public class BadcodeApplication {
-	static Logger logger = LoggerFactory.getLogger(BadcodeApplication.class);
+    static Logger logger = LoggerFactory.getLogger(BadcodeApplication.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(BadcodeApplication.class, args);
-		PersonService personService = new PersonService();
-		logger.info("----- Get Adult Male Average BMI -----");
-		double averageBMI = personService.getAdultMaleUsersAverageBMI();
-		logger.info(">> Average BMI of adult male users is {}", averageBMI);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BadcodeApplication.class, args);
+        PersonService personService = new PersonService();
+        logger.info("----- Get Adult Male Average BMI -----");
+        double averageBMI = personService.getAdultMaleUsersAverageBMI();
+        logger.info(">> Average BMI of adult male users is {}", averageBMI);
+    }
 }
