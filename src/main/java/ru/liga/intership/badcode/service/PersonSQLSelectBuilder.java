@@ -32,9 +32,9 @@ public class PersonSQLSelectBuilder extends SQLSelectBuilder {
         StringBuilder query = new StringBuilder("SELECT ");
         if (select.size() == 0 && !selectAll) throw new RuntimeException("Nothing to select!");
         query.append(SelectCondition());
-        query.append("FROM ").append(tableName).append(" ");
+        query.append(" FROM ").append(tableName);
         if (where.size() != 0) {
-            query.append(WhereCondition());
+            query.append(" ").append(WhereCondition());
         }
         return query.toString();
     }
@@ -45,7 +45,7 @@ public class PersonSQLSelectBuilder extends SQLSelectBuilder {
 
     private String SelectCondition() {
         if (selectAll) {
-            return "* ";
+            return "*";
         }
         return getConditionsByBase(select);
     }
