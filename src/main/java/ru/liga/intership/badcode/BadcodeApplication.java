@@ -15,6 +15,6 @@ public class BadcodeApplication {
 		PersonService personService = new PersonService();
 		logger.info("----- Get Adult Male Average BMI -----");
 		double averageBMI = personService.getAdultMaleUsersAverageBMI();
-		logger.info(">> Average BMI of adult male users id {}", averageBMI);
+		logger.info(">> Average BMI of adult male users is {}", averageBMI);
 	}
 }

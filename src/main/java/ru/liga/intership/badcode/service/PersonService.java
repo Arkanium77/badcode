@@ -35,7 +35,7 @@ public class PersonService {
      * @return средний вес данной группы.
      */
     public double getAdultMaleUsersAverageBMI() {
-        String tableName = "persons";
+        String tableName = "person";
         return getAdultMaleUsersAverageBMI(tableName);
     }
 
@@ -46,11 +46,8 @@ public class PersonService {
      * @return средний вес данной группы.
      */
     public double getAdultMaleUsersAverageBMI(String tableName) {
-        double totalBMI;
-        long countOfPerson;
-
         String query = new PersonSQLSelectBuilder(tableName).setSelectAll()
-                .where("sex = 'male'").andWhere("age > 18").build();
+                .where("sex = 'male'").andWhere("age >= 18").build();
 
         List<Person> adultMaleUsers = ToPersonConverter.objectListConverter(personExtractor.extractByQuery(query));
         BodyMassIndexCalculator calculator = new BodyMassIndexCalculator();
