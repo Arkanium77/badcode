@@ -14,6 +14,7 @@ public class BadcodeApplication {
 		SpringApplication.run(BadcodeApplication.class, args);
 		PersonService personService = new PersonService();
 		logger.info("----- Get Adult Male Average BMI -----");
-		personService.getAdultMaleUsersAverageBMI();
+		double averageBMI = personService.getAdultMaleUsersAverageBMI();
+		logger.info(">> Average BMI of adult male users id {}", averageBMI);
 	}
 }

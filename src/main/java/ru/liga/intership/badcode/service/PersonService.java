@@ -53,36 +53,10 @@ public class PersonService {
                 .where("sex = 'male'").andWhere("age > 18").build();
 
         List<Person> adultMaleUsers = ToPersonConverter.objectListConverter(personExtractor.extractByQuery(query));
-
-        double averageBMI = getAverageBMI(adultMaleUsers);
-        logger.info("Average BMI - {}", averageBMI);
+        BodyMassIndexCalculator calculator = new BodyMassIndexCalculator();
+        double averageBMI = calculator.getAverageBMI(adultMaleUsers);
+        logger.debug("Average BMI - {}", averageBMI);
         return averageBMI;
-    }
-
-    double getAverageBMI(List<Person> people) {
-        double totalBMI;
-        long countOfPerson;
-        totalBMI = getTotalBMI(people);
-        logger.debug("Total BMI : {}", totalBMI);
-
-        countOfPerson = people.size();
-        logger.debug("Total people: {}", people.size());
-        return totalBMI / countOfPerson;
-    }
-
-    double getTotalBMI(List<Person> people) {
-        double totalBMI = 0.0;
-        for (Person person : people) {
-            double bmi = getBMI(person);
-            logger.trace("Imt of {} is {}", person, bmi);
-            totalBMI += bmi;
-        }
-        return totalBMI;
-    }
-
-    double getBMI(Person person) {
-        double heightInMeters = person.getHeight() / 100d;
-        return person.getWeight() / (heightInMeters * heightInMeters);
     }
 
 }
